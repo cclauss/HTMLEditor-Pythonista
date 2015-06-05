@@ -7,7 +7,6 @@ class Config(object):
     def __init__(self):
         self.config_dict = {}
         self.load_config()
-        
         self.save_config()
         
     def load_config(self):
@@ -18,8 +17,7 @@ class Config(object):
             self.config_dict = {
                                 "editor.font.size": 13,
                                 "editor.style": "ace/theme/kuroir",
-                                "editor.show.gutter": "true",
-                                
+                                "editor.show.gutter": "true"
                                 }
             print "Config Default"
             
@@ -28,10 +26,7 @@ class Config(object):
         plistlib.writePlist(self.config_dict, "config.plist")
         
     def get_value(self, key, default="FAILED_TO_LOAD_PROPERTY"):
-        if key in self.config_dict:
-            return self.config_dict[key]
-        else:
-            return default
+        return self.config_dict.get(key, default)
     
     def set_value(self, key, value, dontSave=False):
         self.config_dict[key] = value
