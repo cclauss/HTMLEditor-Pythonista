@@ -406,14 +406,13 @@ NO OPEN FILE
                 for file in self.html_parser.files_list:
                     self.add_page(file)
                 self.pagecontrol.selected_index = 0
-                self.textview.evaluate_javascript("get_editor().getSession().setMode('ace/mode/html');")
-            elif name.endswith(".js"):
-                self.textview.evaluate_javascript("get_editor().getSession().setMode('ace/mode/javascript');")
-            elif name.endswith(".css"):
-                self.textview.evaluate_javascript("get_editor().getSession().setMode('ace/mode/css');")
-            
-            print "Opened File"
-            
+
+            file_type = name.partition('.')[2].replace('js', 'javascript')
+            fmt = "get_editor().getSession().setMode('ace/mode/{}');"
+            self.textview.evaluate_javascript(fmt.format(file_type))
+
+            print "Opened File as {}.".format(file_type)
+
             self.textview.evaluate_javascript("get_editor().setValue(%r)" % file_data)
         else:
             self.textview.text = "Error loading file."
